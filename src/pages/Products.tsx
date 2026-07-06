@@ -83,21 +83,21 @@ export default function Products() {
   const meta = data?.meta;
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div className="space-y-3 sm:space-y-6">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
         <div>
-          <h1 className="text-2xl font-bold">Products</h1>
-          <p className="text-muted text-sm mt-1">Manage your product inventory</p>
+          <h1 className="text-xl font-bold sm:text-2xl">Products</h1>
+          <p className="text-muted text-xs mt-0.5 sm:text-sm sm:mt-1">Manage your product inventory</p>
         </div>
         {hasPermission("products:create") && (
-          <Button onClick={() => setShowForm(true)}>
-            <Plus className="h-4 w-4 mr-2" />
+          <Button className="h-9 px-3 w-fit sm:h-10 sm:px-4" onClick={() => setShowForm(true)}>
+            <Plus className="h-4 w-4 mr-1.5 sm:mr-2" />
             Add Product
           </Button>
         )}
       </div>
 
-      <form onSubmit={handleSearch} className="flex gap-2 max-w-md">
+      <form onSubmit={handleSearch} className="flex gap-1.5 sm:gap-2 max-w-md">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted" />
           <Input
@@ -107,7 +107,7 @@ export default function Products() {
             className="pl-9"
           />
         </div>
-        <Button type="submit" variant="outline">Search</Button>
+        <Button type="submit" variant="outline" className="h-9 px-3 shrink-0 sm:h-10 sm:px-4">Search</Button>
       </form>
 
       <Card>
@@ -117,45 +117,45 @@ export default function Products() {
               <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
             </div>
           ) : products.length === 0 ? (
-            <p className="text-center text-muted py-12">No products found.</p>
+            <p className="text-center text-muted py-8 sm:py-12">No products found.</p>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="w-full text-xs sm:text-sm">
                 <thead>
                   <tr className="border-b border-border text-left bg-secondary/50">
-                    <th className="p-4 font-medium">Product</th>
-                    <th className="p-4 font-medium">SKU</th>
-                    <th className="p-4 font-medium">Category</th>
-                    <th className="p-4 font-medium text-right">Purchase</th>
-                    <th className="p-4 font-medium text-right">Selling</th>
-                    <th className="p-4 font-medium text-right">Stock</th>
-                    <th className="p-4 font-medium text-right">Actions</th>
+                    <th className="p-2 font-medium sm:p-4">Product</th>
+                    <th className="p-2 font-medium sm:p-4">SKU</th>
+                    <th className="p-2 font-medium sm:p-4">Category</th>
+                    <th className="p-2 font-medium text-right sm:p-4">Purchase</th>
+                    <th className="p-2 font-medium text-right sm:p-4">Selling</th>
+                    <th className="p-2 font-medium text-right sm:p-4">Stock</th>
+                    <th className="p-2 font-medium text-right sm:p-4">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {products.map((product) => (
                     <tr key={product._id} className="border-b border-border last:border-0 hover:bg-secondary/30">
-                      <td className="p-4">
-                        <div className="flex items-center gap-3">
+                      <td className="p-2 sm:p-4">
+                        <div className="flex items-center gap-2 sm:gap-3">
                           {product.image ? (
                             <img
                               src={getImageUrl(product.image)}
                               alt={product.name}
-                              className="h-10 w-10 rounded-lg object-cover"
+                              className="h-8 w-8 rounded-lg object-cover sm:h-10 sm:w-10"
                             />
                           ) : (
-                            <div className="h-10 w-10 rounded-lg bg-secondary" />
+                            <div className="h-8 w-8 rounded-lg bg-secondary sm:h-10 sm:w-10" />
                           )}
                           <span className="font-medium">{product.name}</span>
                         </div>
                       </td>
-                      <td className="p-4 text-muted">{product.sku}</td>
-                      <td className="p-4 text-muted">{product.category}</td>
-                      <td className="p-4 text-right">{formatCurrency(product.purchasePrice)}</td>
-                      <td className="p-4 text-right">{formatCurrency(product.sellingPrice)}</td>
-                      <td className="p-4 text-right">
+                      <td className="p-2 text-muted sm:p-4">{product.sku}</td>
+                      <td className="p-2 text-muted sm:p-4">{product.category}</td>
+                      <td className="p-2 text-right sm:p-4">{formatCurrency(product.purchasePrice)}</td>
+                      <td className="p-2 text-right sm:p-4">{formatCurrency(product.sellingPrice)}</td>
+                      <td className="p-2 text-right sm:p-4">
                         <span
-                          className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                          className={`inline-flex items-center rounded-full px-1.5 py-0.5 text-xs font-medium sm:px-2.5 ${
                             product.stockQuantity < 5
                               ? "bg-orange-100 text-orange-700"
                               : "bg-green-100 text-green-700"
@@ -164,7 +164,7 @@ export default function Products() {
                           {product.stockQuantity}
                         </span>
                       </td>
-                      <td className="p-4 text-right">
+                      <td className="p-2 text-right sm:p-4">
                         <div className="flex items-center justify-end gap-1">
                           {hasPermission("products:update") && (
                             <Button variant="ghost" size="sm" onClick={() => handleEdit(product)}>

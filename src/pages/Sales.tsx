@@ -4,7 +4,6 @@ import { salesApi } from "../api/sales";
 import { Card, CardContent } from "../components/ui/Card";
 import Pagination from "../components/ui/Pagination";
 import { formatCurrency } from "../lib/utils";
-import type { User } from "../types";
 
 export default function Sales() {
   const [page, setPage] = useState(1);
@@ -18,10 +17,10 @@ export default function Sales() {
   const meta = data?.meta;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3 sm:space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">Sales History</h1>
-        <p className="text-muted text-sm mt-1">View all sales transactions</p>
+        <h1 className="text-xl font-bold sm:text-2xl">Sales History</h1>
+        <p className="text-muted text-xs mt-0.5 sm:text-sm sm:mt-1">View all sales transactions</p>
       </div>
 
       <Card>
@@ -31,28 +30,30 @@ export default function Sales() {
               <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
             </div>
           ) : sales.length === 0 ? (
-            <p className="text-center text-muted py-12">No sales recorded yet.</p>
+            <p className="text-center text-muted py-8 sm:py-12">No sales recorded yet.</p>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="w-full text-xs sm:text-sm">
                 <thead>
                   <tr className="border-b border-border text-left bg-secondary/50">
-                    <th className="p-4 font-medium">Date</th>
-                    <th className="p-4 font-medium">Items</th>
-                    <th className="p-4 font-medium">Created By</th>
-                    <th className="p-4 font-medium text-right">Grand Total</th>
+                    <th className="p-2 font-medium sm:p-4">Date</th>
+                    <th className="p-2 font-medium sm:p-4">Items</th>
+                    <th className="p-2 font-medium sm:p-4">Created By</th>
+                    <th className="p-2 font-medium text-right sm:p-4">Grand Total</th>
                   </tr>
                 </thead>
                 <tbody>
                   {sales.map((sale) => {
                     const createdBy =
-                      typeof sale.createdBy === "object"
-                        ? (sale.createdBy as User).name
+                      sale.createdBy &&
+                      typeof sale.createdBy === "object" &&
+                      "name" in sale.createdBy
+                        ? sale.createdBy.name
                         : "Unknown";
 
                     return (
                       <tr key={sale._id} className="border-b border-border last:border-0 hover:bg-secondary/30">
-                        <td className="p-4">
+                        <td className="p-2 sm:p-4">
                           {new Date(sale.createdAt).toLocaleDateString("en-US", {
                             year: "numeric",
                             month: "short",
@@ -61,8 +62,8 @@ export default function Sales() {
                             minute: "2-digit",
                           })}
                         </td>
-                        <td className="p-4">
-                          <div className="space-y-1">
+                        <td className="p-2 sm:p-4">
+                          <div className="space-y-0.5 sm:space-y-1">
                             {sale.items.map((item, idx) => (
                               <div key={idx} className="text-muted">
                                 {item.productName} x{item.quantity} = {formatCurrency(item.subtotal)}
@@ -70,8 +71,8 @@ export default function Sales() {
                             ))}
                           </div>
                         </td>
-                        <td className="p-4 text-muted">{createdBy}</td>
-                        <td className="p-4 text-right font-semibold">
+                        <td className="p-2 text-muted sm:p-4">{createdBy}</td>
+                        <td className="p-2 text-right font-semibold sm:p-4">
                           {formatCurrency(sale.grandTotal)}
                         </td>
                       </tr>

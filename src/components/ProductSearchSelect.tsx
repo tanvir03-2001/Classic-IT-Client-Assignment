@@ -62,7 +62,7 @@ export default function ProductSearchSelect({ value, onChange }: ProductSearchSe
 
   if (value) {
     return (
-      <div className="flex h-10 flex-1 items-center gap-2 rounded-lg border border-border bg-white px-3 text-sm">
+      <div className="flex h-9 flex-1 items-center gap-1.5 rounded-lg border border-border bg-white px-2.5 text-xs sm:h-10 sm:gap-2 sm:px-3 sm:text-sm">
         <span className="flex-1 truncate">
           {value.name} ({value.sku}) - Stock: {value.stockQuantity} -{" "}
           {formatCurrency(value.sellingPrice)}
@@ -122,7 +122,7 @@ export default function ProductSearchSelect({ value, onChange }: ProductSearchSe
                 <button
                   key={product._id}
                   type="button"
-                  className="w-full border-b border-border px-3 py-2.5 text-left text-sm last:border-0 hover:bg-secondary/60"
+                  className="w-full border-b border-border px-2.5 py-2 text-left text-xs last:border-0 hover:bg-secondary/60 sm:px-3 sm:py-2.5 sm:text-sm"
                   onClick={() => handleSelect(product)}
                 >
                   <span className="font-medium">{product.name}</span>

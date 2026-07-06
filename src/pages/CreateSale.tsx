@@ -96,10 +96,10 @@ export default function CreateSale() {
   };
 
   return (
-    <div className="space-y-6 max-w-4xl">
+    <div className="space-y-3 sm:space-y-6 max-w-4xl">
       <div>
-        <h1 className="text-2xl font-bold">Create Sale</h1>
-        <p className="text-muted text-sm mt-1">Select products and quantities to create a new sale</p>
+        <h1 className="text-xl font-bold sm:text-2xl">Create Sale</h1>
+        <p className="text-muted text-xs mt-0.5 sm:text-sm sm:mt-1">Select products and quantities to create a new sale</p>
       </div>
 
       <Card>
@@ -107,52 +107,54 @@ export default function CreateSale() {
           <CardTitle>Add Products</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-col sm:flex-row gap-3">
+          <div className="flex flex-col gap-2 sm:flex-row sm:gap-3">
             <ProductSearchSelect
               value={selectedProduct}
               onChange={setSelectedProduct}
             />
-            <Input
-              type="number"
-              min={1}
-              value={quantity}
-              onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
-              className="w-24"
-              placeholder="Qty"
-            />
-            <Button onClick={addToCart}>
-              <Plus className="h-4 w-4 mr-1" />
-              Add
-            </Button>
+            <div className="flex gap-2">
+              <Input
+                type="number"
+                min={1}
+                value={quantity}
+                onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
+                className="w-20 sm:w-24"
+                placeholder="Qty"
+              />
+              <Button onClick={addToCart} className="flex-1 sm:flex-none">
+                <Plus className="h-4 w-4 mr-1" />
+                Add
+              </Button>
+            </div>
           </div>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <ShoppingCart className="h-5 w-5" />
+          <CardTitle className="flex items-center gap-1.5 sm:gap-2">
+            <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
             Sale Items ({cart.length})
           </CardTitle>
         </CardHeader>
         <CardContent>
           {cart.length === 0 ? (
-            <p className="text-center text-muted py-8">No items added yet.</p>
+            <p className="text-center text-muted py-6 sm:py-8">No items added yet.</p>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-2 sm:space-y-3">
               {cart.map((item) => (
                 <div
                   key={item.product}
-                  className="flex items-center justify-between rounded-lg border border-border p-4"
+                  className="flex items-center justify-between rounded-lg border border-border p-2.5 sm:p-4"
                 >
-                  <div>
-                    <p className="font-medium">{item.productData.name}</p>
-                    <p className="text-sm text-muted">
+                  <div className="min-w-0 pr-2">
+                    <p className="font-medium text-sm sm:text-base truncate">{item.productData.name}</p>
+                    <p className="text-xs text-muted sm:text-sm">
                       {formatCurrency(item.productData.sellingPrice)} x {item.quantity}
                     </p>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <span className="font-semibold">
+                  <div className="flex items-center gap-2 shrink-0 sm:gap-4">
+                    <span className="font-semibold text-sm sm:text-base">
                       {formatCurrency(item.productData.sellingPrice * item.quantity)}
                     </span>
                     <Button variant="ghost" size="sm" onClick={() => removeFromCart(item.product)}>
@@ -162,14 +164,13 @@ export default function CreateSale() {
                 </div>
               ))}
 
-              <div className="flex items-center justify-between border-t border-border pt-4 mt-4">
-                <span className="text-lg font-bold">Grand Total</span>
-                <span className="text-2xl font-bold text-primary">{formatCurrency(grandTotal)}</span>
+              <div className="flex items-center justify-between border-t border-border pt-3 mt-3 sm:pt-4 sm:mt-4">
+                <span className="text-base font-bold sm:text-lg">Grand Total</span>
+                <span className="text-xl font-bold text-primary sm:text-2xl">{formatCurrency(grandTotal)}</span>
               </div>
 
               <Button
-                className="w-full mt-4"
-                size="lg"
+                className="w-full mt-3 sm:mt-4"
                 onClick={handleSubmit}
                 disabled={createMutation.isPending}
               >

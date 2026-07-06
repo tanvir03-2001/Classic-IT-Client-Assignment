@@ -34,18 +34,18 @@ export default function Login() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background p-4">
+    <div className="flex min-h-screen items-center justify-center bg-background p-3 sm:p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-            <Package className="h-6 w-6 text-primary" />
+          <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 sm:mb-4 sm:h-12 sm:w-12">
+            <Package className="h-5 w-5 text-primary sm:h-6 sm:w-6" />
           </div>
-          <CardTitle className="text-2xl">Mini ERP</CardTitle>
-          <p className="text-sm text-muted">Inventory & Sales Management</p>
+          <CardTitle className="text-xl sm:text-2xl">Mini ERP</CardTitle>
+          <p className="text-xs text-muted sm:text-sm">Inventory & Sales Management</p>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
+          <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+            <div className="space-y-1.5 sm:space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
@@ -57,7 +57,7 @@ export default function Login() {
               />
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-1.5 sm:space-y-2">
               <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
@@ -74,8 +74,8 @@ export default function Login() {
             </Button>
           </form>
 
-          <div className="mt-6 rounded-lg bg-secondary p-4 text-xs text-muted">
-            <p className="font-medium mb-2">Demo Credentials:</p>
+          <div className="mt-4 rounded-lg bg-secondary p-3 text-xs text-muted sm:mt-6 sm:p-4">
+            <p className="font-medium mb-1.5 sm:mb-2">Demo Credentials:</p>
             <p>Admin: admin@erp.com / admin123</p>
             <p>Manager: manager@erp.com / manager123</p>
             <p>Employee: employee@erp.com / employee123</p>

@@ -91,8 +91,8 @@ export default function UserForm({ user, currentUserId, onClose }: UserFormProps
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <Card className="w-full max-w-lg max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 p-0 sm:p-4">
+      <Card className="w-full max-w-lg max-h-[92vh] sm:max-h-[90vh] overflow-y-auto rounded-b-none sm:rounded-xl">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>{isEdit ? "Edit User" : "Add User"}</CardTitle>
           <button onClick={onClose} className="text-muted hover:text-foreground">
@@ -100,13 +100,13 @@ export default function UserForm({ user, currentUserId, onClose }: UserFormProps
           </button>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
+          <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+            <div className="space-y-1.5 sm:space-y-2">
               <Label htmlFor="name">Full Name *</Label>
               <Input id="name" name="name" value={form.name} onChange={handleChange} required />
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-1.5 sm:space-y-2">
               <Label htmlFor="email">Email *</Label>
               <Input
                 id="email"
@@ -119,7 +119,7 @@ export default function UserForm({ user, currentUserId, onClose }: UserFormProps
             </div>
 
             {!isEdit && (
-              <div className="space-y-2">
+              <div className="space-y-1.5 sm:space-y-2">
                 <Label htmlFor="password">Password *</Label>
                 <Input
                   id="password"
@@ -133,7 +133,7 @@ export default function UserForm({ user, currentUserId, onClose }: UserFormProps
               </div>
             )}
 
-            <div className="space-y-2">
+            <div className="space-y-1.5 sm:space-y-2">
               <Label htmlFor="role">Role / Permission *</Label>
               <select
                 id="role"
@@ -141,7 +141,7 @@ export default function UserForm({ user, currentUserId, onClose }: UserFormProps
                 value={form.role}
                 onChange={handleChange}
                 disabled={isSelf}
-                className="flex h-10 w-full rounded-md border border-border bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-60 disabled:cursor-not-allowed"
+                className="flex h-9 w-full rounded-md border border-border bg-white px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-60 disabled:cursor-not-allowed sm:h-10 sm:px-3 sm:py-2"
               >
                 {roleOptions.map((option) => (
                   <option key={option.value} value={option.value}>

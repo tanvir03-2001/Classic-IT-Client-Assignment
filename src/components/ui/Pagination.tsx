@@ -19,11 +19,12 @@ export default function Pagination({ page, meta, onPageChange }: PaginationProps
   }
 
   return (
-    <div className="flex items-center justify-between">
-      <p className="text-sm text-muted">
-        Page {meta.page} of {meta.totalPages} ({meta.total} total)
+    <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+      <p className="text-xs text-muted sm:text-sm">
+        <span className="sm:hidden">{meta.page}/{meta.totalPages}</span>
+        <span className="hidden sm:inline">Page {meta.page} of {meta.totalPages} ({meta.total} total)</span>
       </p>
-      <div className="flex gap-2">
+      <div className="flex gap-1.5 sm:gap-2">
         <Button
           variant="outline"
           size="sm"

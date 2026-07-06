@@ -32,7 +32,7 @@ export interface Sale {
   _id: string;
   items: SaleItem[];
   grandTotal: number;
-  createdBy: User | string;
+  createdBy: User | string | null;
   createdAt: string;
 }
 

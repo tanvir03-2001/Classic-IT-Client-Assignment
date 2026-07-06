@@ -83,21 +83,21 @@ export default function Users() {
   const meta = data?.meta;
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div className="space-y-3 sm:space-y-6">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
         <div>
-          <h1 className="text-2xl font-bold">Users</h1>
-          <p className="text-muted text-sm mt-1">Manage users and their role permissions</p>
+          <h1 className="text-xl font-bold sm:text-2xl">Users</h1>
+          <p className="text-muted text-xs mt-0.5 sm:text-sm sm:mt-1">Manage users and their role permissions</p>
         </div>
         {hasPermission("users:create") && (
-          <Button onClick={() => setShowForm(true)}>
-            <Plus className="h-4 w-4 mr-2" />
+          <Button className="h-9 px-3 w-fit sm:h-10 sm:px-4" onClick={() => setShowForm(true)}>
+            <Plus className="h-4 w-4 mr-1.5 sm:mr-2" />
             Add User
           </Button>
         )}
       </div>
 
-      <form onSubmit={handleSearch} className="flex gap-2 max-w-md">
+      <form onSubmit={handleSearch} className="flex gap-1.5 sm:gap-2 max-w-md">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted" />
           <Input
@@ -107,7 +107,7 @@ export default function Users() {
             className="pl-9"
           />
         </div>
-        <Button type="submit" variant="outline">
+        <Button type="submit" variant="outline" className="h-9 px-3 shrink-0 sm:h-10 sm:px-4">
           Search
         </Button>
       </form>
@@ -119,16 +119,16 @@ export default function Users() {
               <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
             </div>
           ) : users.length === 0 ? (
-            <p className="text-center text-muted py-12">No users found.</p>
+            <p className="text-center text-muted py-8 sm:py-12">No users found.</p>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="w-full text-xs sm:text-sm">
                 <thead>
                   <tr className="border-b border-border text-left bg-secondary/50">
-                    <th className="p-4 font-medium">Name</th>
-                    <th className="p-4 font-medium">Email</th>
-                    <th className="p-4 font-medium">Role</th>
-                    <th className="p-4 font-medium text-right">Actions</th>
+                    <th className="p-2 font-medium sm:p-4">Name</th>
+                    <th className="p-2 font-medium sm:p-4">Email</th>
+                    <th className="p-2 font-medium sm:p-4">Role</th>
+                    <th className="p-2 font-medium text-right sm:p-4">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -137,18 +137,18 @@ export default function Users() {
                       key={user._id}
                       className="border-b border-border last:border-0 hover:bg-secondary/30"
                     >
-                      <td className="p-4 font-medium">{user.name}</td>
-                      <td className="p-4 text-muted">{user.email}</td>
-                      <td className="p-4">
+                      <td className="p-2 font-medium sm:p-4">{user.name}</td>
+                      <td className="p-2 text-muted sm:p-4">{user.email}</td>
+                      <td className="p-2 sm:p-4">
                         <span
-                          className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize ${
+                          className={`inline-flex items-center rounded-full px-1.5 py-0.5 text-xs font-medium capitalize sm:px-2.5 ${
                             roleBadgeClass[user.role] || roleBadgeClass.employee
                           }`}
                         >
                           {user.role}
                         </span>
                       </td>
-                      <td className="p-4 text-right">
+                      <td className="p-2 text-right sm:p-4">
                         <div className="flex items-center justify-end gap-1">
                           {hasPermission("users:update") && (
                             <Button variant="ghost" size="sm" onClick={() => handleEdit(user)}>

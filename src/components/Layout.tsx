@@ -46,18 +46,18 @@ export default function Layout() {
 
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-50 w-64 transform bg-white border-r border-border transition-transform lg:static lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-50 w-56 transform bg-white border-r border-border transition-transform sm:w-64 lg:static lg:translate-x-0",
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
-        <div className="flex h-16 items-center justify-between px-6 border-b border-border">
-          <h1 className="text-lg font-bold text-primary">Mini ERP</h1>
+        <div className="flex h-12 items-center justify-between px-4 border-b border-border sm:h-16 sm:px-6">
+          <h1 className="text-base font-bold text-primary sm:text-lg">Mini ERP</h1>
           <button className="lg:hidden" onClick={() => setSidebarOpen(false)}>
             <X className="h-5 w-5" />
           </button>
         </div>
 
-        <nav className="flex flex-col gap-1 p-4">
+        <nav className="flex flex-col gap-0.5 p-3 sm:gap-1 sm:p-4">
           {filteredNav.map((item) => (
             <NavLink
               key={item.to}
@@ -66,7 +66,7 @@ export default function Layout() {
               onClick={() => setSidebarOpen(false)}
               className={({ isActive }) =>
                 cn(
-                  "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+                  "flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm font-medium transition-colors sm:gap-3 sm:px-3 sm:py-2.5",
                   isActive
                     ? "bg-primary text-primary-foreground"
                     : "text-muted hover:bg-secondary hover:text-foreground"
@@ -79,8 +79,8 @@ export default function Layout() {
           ))}
         </nav>
 
-        <div className="absolute bottom-0 left-0 right-0 border-t border-border p-4">
-          <div className="mb-3 px-3">
+        <div className="absolute bottom-0 left-0 right-0 border-t border-border p-3 sm:p-4">
+          <div className="mb-2 px-2 sm:mb-3 sm:px-3">
             <p className="text-sm font-medium">{user?.name}</p>
             <p className="text-xs text-muted capitalize">{user?.role}</p>
           </div>
@@ -92,14 +92,14 @@ export default function Layout() {
       </aside>
 
       <div className="flex flex-1 flex-col overflow-hidden">
-        <header className="flex h-16 items-center gap-4 border-b border-border bg-white px-6 lg:hidden">
+        <header className="flex h-12 items-center gap-3 border-b border-border bg-white px-3 lg:hidden">
           <button onClick={() => setSidebarOpen(true)}>
             <Menu className="h-5 w-5" />
           </button>
-          <h1 className="text-lg font-bold text-primary">Mini ERP</h1>
+          <h1 className="text-base font-bold text-primary">Mini ERP</h1>
         </header>
 
-        <main className="flex-1 overflow-y-auto p-6">
+        <main className="flex-1 overflow-y-auto p-3 sm:p-6">
           <Outlet />
         </main>
       </div>

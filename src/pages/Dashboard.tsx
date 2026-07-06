@@ -60,22 +60,22 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3 sm:space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">Dashboard</h1>
-        <p className="text-muted text-sm mt-1">Overview of your inventory and sales</p>
+        <h1 className="text-xl font-bold sm:text-2xl">Dashboard</h1>
+        <p className="text-muted text-xs mt-0.5 sm:text-sm sm:mt-1">Overview of your inventory and sales</p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-2 sm:gap-4 lg:grid-cols-4">
         {statCards.map((card) => (
           <Card key={card.title}>
-            <CardContent className="flex items-center gap-4 p-6">
-              <div className={`rounded-lg p-3 ${card.color}`}>
-                <card.icon className="h-5 w-5" />
+            <CardContent className="flex items-center gap-2 p-3 sm:gap-4 sm:p-6">
+              <div className={`rounded-lg p-2 sm:p-3 ${card.color}`}>
+                <card.icon className="h-4 w-4 sm:h-5 sm:w-5" />
               </div>
-              <div>
-                <p className="text-sm text-muted">{card.title}</p>
-                <p className="text-2xl font-bold">{card.value}</p>
+              <div className="min-w-0">
+                <p className="text-xs text-muted truncate sm:text-sm">{card.title}</p>
+                <p className="text-lg font-bold sm:text-2xl">{card.value}</p>
               </div>
             </CardContent>
           </Card>
@@ -84,54 +84,54 @@ export default function Dashboard() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <AlertTriangle className="h-5 w-5 text-orange-500" />
-            Low Stock Products (Stock &lt; 5)
+          <CardTitle className="flex items-center gap-1.5 text-sm sm:gap-2 sm:text-base">
+            <AlertTriangle className="h-4 w-4 text-orange-500 sm:h-5 sm:w-5" />
+            <span className="leading-tight">Low Stock Products (Stock &lt; 5)</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
           {stats?.lowStockProducts && stats.lowStockProducts.length > 0 ? (
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="w-full text-xs sm:text-sm">
                 <thead>
                   <tr className="border-b border-border text-left">
-                    <th className="pb-3 font-medium">Product</th>
-                    <th className="pb-3 font-medium">SKU</th>
-                    <th className="pb-3 font-medium">Category</th>
-                    <th className="pb-3 font-medium text-right">Stock</th>
-                    <th className="pb-3 font-medium text-right">Price</th>
+                    <th className="pb-2 font-medium sm:pb-3">Product</th>
+                    <th className="pb-2 font-medium sm:pb-3">SKU</th>
+                    <th className="pb-2 font-medium sm:pb-3">Category</th>
+                    <th className="pb-2 font-medium text-right sm:pb-3">Stock</th>
+                    <th className="pb-2 font-medium text-right sm:pb-3">Price</th>
                   </tr>
                 </thead>
                 <tbody>
                   {stats.lowStockProducts.map((product) => (
                     <tr key={product._id} className="border-b border-border last:border-0">
-                      <td className="py-3">
-                        <div className="flex items-center gap-3">
+                      <td className="py-2 sm:py-3">
+                        <div className="flex items-center gap-2 sm:gap-3">
                           {product.image && (
                             <img
                               src={getImageUrl(product.image)}
                               alt={product.name}
-                              className="h-8 w-8 rounded object-cover"
+                              className="h-6 w-6 rounded object-cover sm:h-8 sm:w-8"
                             />
                           )}
                           <span className="font-medium">{product.name}</span>
                         </div>
                       </td>
-                      <td className="py-3 text-muted">{product.sku}</td>
-                      <td className="py-3 text-muted">{product.category}</td>
-                      <td className="py-3 text-right">
-                        <span className="inline-flex items-center rounded-full bg-orange-100 px-2.5 py-0.5 text-xs font-medium text-orange-700">
+                      <td className="py-2 text-muted sm:py-3">{product.sku}</td>
+                      <td className="py-2 text-muted sm:py-3">{product.category}</td>
+                      <td className="py-2 text-right sm:py-3">
+                        <span className="inline-flex items-center rounded-full bg-orange-100 px-1.5 py-0.5 text-xs font-medium text-orange-700 sm:px-2.5">
                           {product.stockQuantity}
                         </span>
                       </td>
-                      <td className="py-3 text-right">{formatCurrency(product.sellingPrice)}</td>
+                      <td className="py-2 text-right sm:py-3">{formatCurrency(product.sellingPrice)}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
           ) : (
-            <p className="text-muted text-center py-8">No low stock products. All good!</p>
+            <p className="text-muted text-center py-6 sm:py-8">No low stock products. All good!</p>
           )}
 
           {stats?.lowStockMeta && (
