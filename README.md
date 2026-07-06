@@ -39,9 +39,10 @@ cd Server
 npm install
 Copy-Item .env.example .env    # Windows PowerShell
 # cp .env.example .env         # Linux / macOS
-npm run seed
 npm run dev
 ```
+
+Default users (admin, manager, employee) are created automatically on first server startup.
 
 Backend should be running at `http://localhost:5000`.
 
@@ -96,7 +97,7 @@ Set `VITE_API_URL` to your deployed backend URL before building.
 | Issue | Solution |
 | ----- | -------- |
 | Login fails / network error | Ensure backend is running on port 5000 |
-| Blank page after login | Check browser console; verify `npm run seed` was run |
+| Blank page after login | Check browser console; ensure backend is running and default users were created on startup |
 | Product images not loading | Backend must be running; images served from `/uploads` |
 | 401 redirect loop | Clear `localStorage` and log in again |
 
@@ -104,7 +105,7 @@ Set `VITE_API_URL` to your deployed backend URL before building.
 
 ## Admin Login Credentials
 
-Use these on the login page after seeding the backend (`npm run seed` in `Server` folder).
+Use these on the login page after starting the backend (`npm run dev` in `Server` folder). Default users are created automatically if they do not exist.
 
 | Role     | Email               | Password      |
 | -------- | ------------------- | ------------- |
