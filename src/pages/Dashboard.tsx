@@ -92,7 +92,7 @@ export default function Dashboard() {
         <CardContent>
           {stats?.lowStockProducts && stats.lowStockProducts.length > 0 ? (
             <div className="overflow-x-auto">
-              <table className="w-full text-xs sm:text-sm">
+              <table className="w-full whitespace-nowrap text-xs sm:text-sm">
                 <thead>
                   <tr className="border-b border-border text-left">
                     <th className="pb-2 font-medium sm:pb-3">Product</th>

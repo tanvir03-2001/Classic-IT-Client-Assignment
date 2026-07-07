@@ -33,7 +33,7 @@ export default function Sales() {
             <p className="text-center text-muted py-8 sm:py-12">No sales recorded yet.</p>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full text-xs sm:text-sm">
+              <table className="w-full whitespace-nowrap text-xs sm:text-sm">
                 <thead>
                   <tr className="border-b border-border text-left bg-secondary/50">
                     <th className="p-2 font-medium sm:p-4">Date</th>
