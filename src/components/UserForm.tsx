@@ -6,6 +6,7 @@ import Button from "./ui/Button";
 import Input from "./ui/Input";
 import Label from "./ui/Label";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/Card";
+import Modal from "./ui/Modal";
 import { X } from "lucide-react";
 import type { User, UserRole } from "../types";
 
@@ -91,8 +92,8 @@ export default function UserForm({ user, currentUserId, onClose }: UserFormProps
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 p-0 sm:p-4">
-      <Card className="w-full max-w-lg max-h-[92vh] sm:max-h-[90vh] overflow-y-auto rounded-b-none sm:rounded-xl">
+    <Modal onClose={onClose}>
+      <Card className="max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-xl">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>{isEdit ? "Edit User" : "Add User"}</CardTitle>
           <button onClick={onClose} className="text-muted hover:text-foreground">
@@ -167,6 +168,6 @@ export default function UserForm({ user, currentUserId, onClose }: UserFormProps
           </form>
         </CardContent>
       </Card>
-    </div>
+    </Modal>
   );
 }

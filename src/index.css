@@ -30,3 +30,8 @@ body {
     font-size: 16px;
   }
 }
+
+[data-sonner-toaster] {
+  z-index: 100 !important;
+  top: 1rem !important;
+}

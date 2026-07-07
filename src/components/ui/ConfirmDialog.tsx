@@ -1,5 +1,6 @@
 import Button from "./Button";
 import { Card, CardContent, CardHeader, CardTitle } from "./Card";
+import Modal from "./Modal";
 import { AlertTriangle } from "lucide-react";
 
 interface ConfirmDialogProps {
@@ -26,8 +27,8 @@ export default function ConfirmDialog({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/50 p-3 sm:p-4">
-      <Card className="w-full max-w-md rounded-b-none sm:rounded-xl">
+    <Modal onClose={onCancel} maxWidth="sm" zIndex="60">
+      <Card className="rounded-xl">
         <CardHeader>
           <CardTitle className="flex items-center gap-1.5 sm:gap-2">
             <AlertTriangle className="h-4 w-4 text-destructive sm:h-5 sm:w-5" />
@@ -46,6 +47,6 @@ export default function ConfirmDialog({
           </div>
         </CardContent>
       </Card>
-    </div>
+    </Modal>
   );
 }

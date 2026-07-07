@@ -87,7 +87,14 @@ export default function App() {
       <BrowserRouter>
         <AuthProvider>
           <AppRoutes />
-          <Toaster position="top-right" richColors closeButton />
+          <Toaster
+            position="top-center"
+            richColors
+            closeButton
+            offset={16}
+            toastOptions={{ className: "z-[100]" }}
+            style={{ zIndex: 100 }}
+          />
         </AuthProvider>
       </BrowserRouter>
     </QueryClientProvider>

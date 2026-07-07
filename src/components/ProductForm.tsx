@@ -6,6 +6,7 @@ import Button from "./ui/Button";
 import Input from "./ui/Input";
 import Label from "./ui/Label";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/Card";
+import Modal from "./ui/Modal";
 import { X } from "lucide-react";
 import { getImageUrl } from "../lib/utils";
 import {
@@ -115,8 +116,8 @@ export default function ProductForm({ product, onClose }: ProductFormProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 p-0 sm:p-4">
-      <Card className="w-full max-w-lg max-h-[92vh] sm:max-h-[90vh] overflow-y-auto rounded-b-none sm:rounded-xl">
+    <Modal onClose={onClose}>
+      <Card className="max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-xl">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>{isEdit ? "Edit Product" : "Add Product"}</CardTitle>
           <button onClick={onClose} className="text-muted hover:text-foreground">
@@ -127,7 +128,7 @@ export default function ProductForm({ product, onClose }: ProductFormProps) {
           <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             <div className="space-y-1.5 sm:space-y-2">
               <Label>Product Image {!isEdit && "*"}</Label>
-              <div className="flex items-center gap-3 sm:gap-4">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
                 {preview && (
                   <img
                     src={preview.startsWith("blob:") ? preview : getImageUrl(preview)}
@@ -149,8 +150,8 @@ export default function ProductForm({ product, onClose }: ProductFormProps) {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
-              <div className="space-y-1.5 col-span-2 sm:space-y-2">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+              <div className="space-y-1.5 sm:col-span-2 sm:space-y-2">
                 <Label htmlFor="name">Product Name *</Label>
                 <Input id="name" name="name" value={form.name} onChange={handleChange} required />
               </div>
@@ -173,7 +174,7 @@ export default function ProductForm({ product, onClose }: ProductFormProps) {
                 <Label htmlFor="sellingPrice">Selling Price *</Label>
                 <Input id="sellingPrice" name="sellingPrice" type="number" step="0.01" min="0" value={form.sellingPrice} onChange={handleChange} required />
               </div>
-              <div className="space-y-1.5 col-span-2 sm:space-y-2">
+              <div className="space-y-1.5 col-span-1 sm:col-span-2 sm:space-y-2">
                 <Label htmlFor="stockQuantity">Stock Quantity *</Label>
                 <Input id="stockQuantity" name="stockQuantity" type="number" min="0" value={form.stockQuantity} onChange={handleChange} required />
               </div>
@@ -190,6 +191,6 @@ export default function ProductForm({ product, onClose }: ProductFormProps) {
           </form>
         </CardContent>
       </Card>
-    </div>
+    </Modal>
   );
 }
