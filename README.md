@@ -2,6 +2,13 @@
 
 Inventory & Sales Management System web application built with **React**, **TypeScript**, **Vite**, and **Tailwind CSS**.
 
+## Live URL
+
+| App | URL |
+| --- | --- |
+| Frontend | `https://mini-erp-client-ebon.vercel.app` |
+| Backend API | `https://mini-erp-api-zeta.vercel.app` |
+
 ---
 
 ## Project Setup & Installation Guide
@@ -16,19 +23,22 @@ Tanvir Assaingment/
     │   ├── api/         # API service layer
     │   ├── components/  # Reusable UI components
     │   ├── context/     # Auth context
+    │   ├── lib/         # Utilities (image validation, formatting)
     │   ├── pages/       # Route pages
     │   └── types/       # TypeScript types
     ├── .env.example
+    ├── vercel.json
     └── package.json
 ```
 
 ### Prerequisites
 
-| Tool    | Version | Notes                                |
-| ------- | ------- | ------------------------------------ |
-| Node.js | v18+    | [nodejs.org](https://nodejs.org)     |
-| npm     | v9+     | Included with Node.js                |
-| Backend | Running | See [Server README](../Server/README.md) |
+| Tool       | Version | Notes                                |
+| ---------- | ------- | ------------------------------------ |
+| Node.js    | v18+    | [nodejs.org](https://nodejs.org)     |
+| npm        | v9+     | Included with Node.js                |
+| Backend    | Running | See [Server README](../Server/README.md) |
+| Cloudinary | —       | Configured on backend for product images |
 
 ### Full Setup (first time)
 
@@ -39,10 +49,15 @@ cd Server
 npm install
 Copy-Item .env.example .env    # Windows PowerShell
 # cp .env.example .env         # Linux / macOS
+```
+
+Edit `Server/.env` — set `MONGODB_URI`, `JWT_SECRET`, and **Cloudinary** credentials (see Server README).
+
+```bash
 npm run dev
 ```
 
-Default users (admin, manager, employee) are created automatically on first server startup.
+Default users (admin, manager, employee) are created automatically on first database connection.
 
 Backend should be running at `http://localhost:5000`.
 
@@ -72,7 +87,7 @@ VITE_API_URL=http://localhost:5000
 | -------------- | --------------------- | ------------------------- |
 | `VITE_API_URL` | Backend API base URL  | `http://localhost:5000`   |
 
-> In development, Vite proxies `/api` and `/uploads` to the backend automatically (see `vite.config.ts`). You do not need to change anything if both run on default ports.
+> In development, Vite proxies `/api` to the backend automatically (see `vite.config.ts`). Product images are loaded directly from **Cloudinary URLs** returned by the API.
 
 ### Available Scripts
 
@@ -83,22 +98,36 @@ VITE_API_URL=http://localhost:5000
 | `npm run preview` | Preview the production build locally |
 | `npm run lint`    | Run ESLint                           |
 
-### Production build (optional)
+### Production build & deploy
 
 ```bash
 npm run build
 npm run preview
 ```
 
-Set `VITE_API_URL` to your deployed backend URL before building.
+**Vercel deployment:**
+
+1. Set `VITE_API_URL` to your deployed backend URL before building
+2. Push to GitHub and import in Vercel
+3. Framework preset: **Vite**
+4. Output directory: `dist`
+
+Example production `.env`:
+
+```env
+VITE_API_URL=https://mini-erp-api-zeta.vercel.app
+```
 
 ### Troubleshooting
 
 | Issue | Solution |
 | ----- | -------- |
 | Login fails / network error | Ensure backend is running on port 5000 |
-| Blank page after login | Check browser console; ensure backend is running and default users were created on startup |
-| Product images not loading | Backend must be running; images served from `/uploads` |
+| Blank page after login | Check browser console; ensure backend is running and default users were created |
+| Sales page blank | Hard refresh; ensure API returns valid sales data |
+| Product images not loading | Images come from Cloudinary URLs in API response — check `image` field |
+| Image upload rejected | Use JPG, PNG, GIF, WebP, BMP, or TIFF under 5 MB |
+| `Unsupported image format` | AVIF/HEIC not supported — convert to JPG or PNG |
 | 401 redirect loop | Clear `localStorage` and log in again |
 
 ---
@@ -141,6 +170,29 @@ Use these on the login page after starting the backend (`npm run dev` in `Server
 
 ---
 
+## Features
+
+### Product management
+
+- Search, paginate, create, edit, and delete products
+- **Image upload** via backend to Cloudinary
+- Allowed formats: **JPG, PNG, GIF, WebP, BMP, TIFF** (max **5 MB**)
+- Client-side validation before upload with clear error messages
+- **Auto unique SKU** — if SKU already exists, backend generates `SKU-2`, `SKU-3`, etc.
+
+### Sales
+
+- Cart-style sale creation with product search
+- Stock validation on client and server
+- Sales history with line items and creator name
+
+### Dashboard
+
+- Total products, sales count, revenue
+- Low-stock products (stock < 5)
+
+---
+
 ## Tech Stack
 
 - **React 19** with React Router v7
@@ -149,3 +201,11 @@ Use these on the login page after starting the backend (`npm run dev` in `Server
 - **Tailwind CSS 4** for styling
 - **Sonner** for toast notifications
 - **Lucide React** for icons
+
+---
+
+## Related Docs
+
+- [Server README](../Server/README.md) — API setup, Cloudinary config, full API docs
+- [Project Overview](../PROJECT_OVERVIEW.md) — architecture & interview prep
+- [Interview Questions](../INTERVIEW_QUESTIONS.md) — Q&A guide

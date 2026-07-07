@@ -1,6 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { env } from "../config/env";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -16,6 +15,5 @@ export function formatCurrency(amount: number): string {
 export function getImageUrl(path: string): string {
   if (!path) return "";
   if (path.startsWith("http")) return path;
-  if (env.isDev) return path;
-  return `${env.apiUrl}${path}`;
+  return path;
 }

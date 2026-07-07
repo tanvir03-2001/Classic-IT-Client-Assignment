@@ -64,16 +64,6 @@ export interface LoginResponse {
   token: string;
 }
 
-export interface ProductFormData {
-  name: string;
-  sku: string;
-  category: string;
-  purchasePrice: number;
-  sellingPrice: number;
-  stockQuantity: number;
-  image?: File;
-}
-
 export interface SaleItemInput {
   product: string;
   quantity: number;

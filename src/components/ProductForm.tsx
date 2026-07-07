@@ -8,6 +8,13 @@ import Label from "./ui/Label";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/Card";
 import { X } from "lucide-react";
 import { getImageUrl } from "../lib/utils";
+import {
+  ALLOWED_IMAGE_LABEL,
+  getApiErrorMessage,
+  IMAGE_ACCEPT_ATTRIBUTE,
+  MAX_IMAGE_SIZE_MB,
+  validateImageFile,
+} from "../lib/imageUpload";
 import type { Product } from "../types";
 
 interface ProductFormProps {
@@ -29,21 +36,28 @@ export default function ProductForm({ product, onClose }: ProductFormProps) {
   });
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState(product?.image || "");
+  const [imageError, setImageError] = useState("");
 
   const mutation = useMutation({
     mutationFn: (formData: FormData) =>
       isEdit ? productsApi.update(product!._id, formData) : productsApi.create(formData),
-    onSuccess: () => {
+    onSuccess: (response) => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
       queryClient.invalidateQueries({ queryKey: ["dashboard"] });
-      toast.success(isEdit ? "Product updated successfully" : "Product created successfully");
+
+      const savedSku = response.data.sku;
+      const submittedSku = form.sku.trim().toUpperCase();
+
+      if (!isEdit && savedSku !== submittedSku) {
+        toast.success(`Product created successfully. SKU adjusted to ${savedSku}.`);
+      } else {
+        toast.success(isEdit ? "Product updated successfully" : "Product created successfully");
+      }
+
       onClose();
     },
     onError: (err: unknown) => {
-      const message =
-        (err as { response?: { data?: { message?: string } } })?.response?.data?.message ||
-        "Failed to save product";
-      toast.error(message);
+      toast.error(getApiErrorMessage(err, "Failed to save product"));
     },
   });
 
@@ -53,10 +67,22 @@ export default function ProductForm({ product, onClose }: ProductFormProps) {
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      setImage(file);
-      setPreview(URL.createObjectURL(file));
+    if (!file) {
+      return;
     }
+
+    const error = validateImageFile(file);
+    if (error) {
+      setImage(null);
+      setImageError(error);
+      e.target.value = "";
+      toast.error(error);
+      return;
+    }
+
+    setImageError("");
+    setImage(file);
+    setPreview(URL.createObjectURL(file));
   };
 
   const handleSubmit = (e: FormEvent) => {
@@ -65,6 +91,15 @@ export default function ProductForm({ product, onClose }: ProductFormProps) {
     if (!isEdit && !image) {
       toast.error("Product image is required");
       return;
+    }
+
+    if (image) {
+      const error = validateImageFile(image);
+      if (error) {
+        setImageError(error);
+        toast.error(error);
+        return;
+      }
     }
 
     const formData = new FormData();
@@ -100,7 +135,17 @@ export default function ProductForm({ product, onClose }: ProductFormProps) {
                     className="h-12 w-12 rounded-lg object-cover border border-border sm:h-16 sm:w-16"
                   />
                 )}
-                <Input type="file" accept="image/*" onChange={handleImageChange} />
+                <div className="flex-1 space-y-1">
+                  <Input
+                    type="file"
+                    accept={IMAGE_ACCEPT_ATTRIBUTE}
+                    onChange={handleImageChange}
+                  />
+                  <p className="text-xs text-muted">
+                    Allowed: {ALLOWED_IMAGE_LABEL}. Max size: {MAX_IMAGE_SIZE_MB}MB.
+                  </p>
+                  {imageError && <p className="text-xs text-destructive">{imageError}</p>}
+                </div>
               </div>
             </div>
 
@@ -112,6 +157,9 @@ export default function ProductForm({ product, onClose }: ProductFormProps) {
               <div className="space-y-1.5 sm:space-y-2">
                 <Label htmlFor="sku">SKU *</Label>
                 <Input id="sku" name="sku" value={form.sku} onChange={handleChange} required />
+                <p className="text-xs text-muted">
+                  If SKU already exists, a unique SKU will be generated automatically.
+                </p>
               </div>
               <div className="space-y-1.5 sm:space-y-2">
                 <Label htmlFor="category">Category *</Label>
